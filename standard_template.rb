@@ -1,3 +1,8 @@
+# Standard empty project with cucumber, factory girl, database cleaner, and spork
+#
+# The config files are pulled in for cucumber and rspec to have spork and factory girl ready to go
+#
+
 project :adapter    => :sqlite,
         :orm        => :activerecord,
         :test       => :cucumber,
