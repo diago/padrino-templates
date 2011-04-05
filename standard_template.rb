@@ -19,5 +19,7 @@ inject_into_file destination_root('config/boot.rb'), YAML_FIX, :after => "Padrin
 run_bundler
 
 # Overwrite features/support/env.rb
+get 'https://github.com/diago/padrino-templates/raw/master/features/support/env.rb', 'features/support/env.rb'
 
 # Overwrite spec/spec_helper.rb
+get 'https://github.com/diago/padrino-templates/raw/master/spec/spec_helper.rb', 'spec/spec_helper.rb'
