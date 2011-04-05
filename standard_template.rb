@@ -9,7 +9,7 @@ project :adapter    => :sqlite,
         :script     => :jquery,
         :stylesheet => :compass
 
-say "Adding test gems"
+say "=> Adding test gems"
 TEST_GEMS = <<-GEM
 gem 'database_cleaner', :group => "test"
 gem 'factory_girl', :group => "test"
@@ -17,7 +17,7 @@ gem 'spork', '~> 0.9.0rc', :group => "test"
 GEM
 inject_into_file destination_root('Gemfile'), TEST_GEMS, :after => "# Test requirements\n"
 
-say "Fixing YAML issue"
+say "=> Fixing YAML issue"
 YAML_FIX = <<-FIX
    YAML::ENGINE.yamler= 'syck'
 FIX
@@ -38,6 +38,7 @@ remove_file(file_spec_helper)
 get 'https://github.com/diago/padrino-templates/raw/master/spec/spec_helper.rb', file_spec_helper
 
 
+say "=> Initialize git"
 # Git SCM
 git :init
 
