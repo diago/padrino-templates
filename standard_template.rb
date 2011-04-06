@@ -41,6 +41,14 @@ get 'https://github.com/diago/padrino-templates/raw/master/spec/spec_helper.rb',
 rake "ar:create -e development"
 rake "ar:create -e test"
 
+# Create gitignore
+say "=> Adding gitignore file"
+GIT_IGNORE = <<-IGNORE
+*.swp
+.sass-cache*
+IGNORE
+create_file '.gitignore', GIT_IGNORE
+
 say "=> Initialize git"
 # Git SCM
 git :init
