@@ -20,7 +20,8 @@ Spork.prefork do
 
   # Factory Girl
   require 'factory_girl'
-  require Padrino.mounted_root + '/spec/factories.rb'
+  factories = Padrino.mounted_root + '/spec/factories.rb'
+  require factories if File.exists?(factories)
 
   ##
   # You can handle all padrino applications using instead:
