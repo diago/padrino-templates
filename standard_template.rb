@@ -37,6 +37,9 @@ file_spec_helper = 'spec/spec_helper.rb'
 remove_file(file_spec_helper)
 get 'https://github.com/diago/padrino-templates/raw/master/spec/spec_helper.rb', file_spec_helper
 
+# Create dev and test db
+rake "ar:create -e development"
+rake "ar:create -e test"
 
 say "=> Initialize git"
 # Git SCM
