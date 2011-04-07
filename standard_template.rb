@@ -23,19 +23,15 @@ YAML_FIX = <<-FIX
 FIX
 inject_into_file destination_root('config/boot.rb'), YAML_FIX, :after => "Padrino.before_load do\n"
 
+# bundle it
 run_bundler
 
-# Overwrite features/support/env.rb
-say "=> Overwriting cucumber env.rb"
-file_env = 'features/support/env.rb'
-remove_file(file_env)
-get 'https://github.com/diago/padrino-templates/raw/master/features/support/env.rb', file_env
-
-# Overwrite spec/spec_helper.rb
-say "=> Overwriting rspec spec_helper.rb"
-file_spec_helper = 'spec/spec_helper.rb'
-remove_file(file_spec_helper)
-get 'https://github.com/diago/padrino-templates/raw/master/spec/spec_helper.rb', file_spec_helper
+# Overwrite features/support/env.rb and 'spec/spec_helper.rb' with configured ones
+['features/support/env.rb', 'spec/spec_helper.rb'].each do |f|
+  say "=> Overwriting #{f}"
+  remove_file f
+  get "https://github.com/diago/padrino-templates/raw/master/#{f}", f
+end
 
 # Create dev and test db
 rake "ar:create -e development"
@@ -49,11 +45,10 @@ GIT_IGNORE = <<-IGNORE
 IGNORE
 create_file '.gitignore', GIT_IGNORE
 
-say "=> Initialize git"
 # Git SCM
+say "=> Initialize git"
 git :init
 
-# say
 # if no?('Use your global git configuration?')
 #   user_name  = ask('Git user.name:')
 #   user_email = ask('Git user.email')
