@@ -22,17 +22,13 @@ Spork.prefork do
   require 'factory_girl'
   factories = Padrino.mounted_root + '/spec/factories.rb'
   require factories if File.exists?(factories)
+  require 'factory_girl/step_definitions'
 
   ##
   # You can handle all padrino applications using instead:
   #   Padrino.application
   Capybara.app = Padrino.application
   # Capybara.current_driver = :selenium
-
-  # Include factory girl step definitions
-  Before do
-    require 'factory_girl/step_definitions'
-  end
 
 end
 
