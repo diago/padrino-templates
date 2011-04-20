@@ -2,19 +2,23 @@
 #
 # The config files are pulled in for cucumber and rspec to have spork and factory girl ready to go
 #
+ORM = {:ar => :activerecord, :dm => :datamapper}
+
+orm = ask('What orm will you be using? (ar/dm)')
 
 project :adapter    => :sqlite,
-        :orm        => :activerecord,
+        :orm        => ORM[orm.to_sym],
         :test       => :cucumber,
         :script     => :jquery,
         :stylesheet => :compass
 
 say "=> Adding test gems"
 TEST_GEMS = <<-GEM
-gem 'database_cleaner', :group => "test"
-gem 'factory_girl', :group => "test"
-gem 'spork', '~> 0.9.0rc', :group => "test"
+gem 'database_cleaner', :group => 'test'
+gem 'spork', '~> 0.9.0rc', :group => 'test'
 GEM
+TEST_GEMS += "gem 'factory_girl', :group => 'test'\n" if orm == :ar
+TEST_GEMS += "gem 'dm-sweatshop', :group => 'test'\n" if orm == :dm
 inject_into_file destination_root('Gemfile'), TEST_GEMS, :after => "# Test requirements\n"
 
 say "=> Fixing YAML issue"
@@ -34,8 +38,8 @@ run_bundler
 end
 
 # Create dev and test db
-rake "ar:create -e development"
-rake "ar:create -e test"
+rake "#{orm}:create -e development"
+rake "#{orm}:create -e test"
 
 # Create gitignore
 say "=> Adding gitignore file"
