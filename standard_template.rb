@@ -5,9 +5,10 @@
 ORM = {:ar => :activerecord, :dm => :datamapper}
 
 orm = ask('What orm will you be using? (ar/dm)')
+orm = orm.to_sym
 
 project :adapter    => :sqlite,
-        :orm        => ORM[orm.to_sym],
+        :orm        => ORM[orm],
         :test       => :cucumber,
         :script     => :jquery,
         :stylesheet => :compass
